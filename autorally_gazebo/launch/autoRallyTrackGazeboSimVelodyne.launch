@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+
+<!-- autoRallyTrackGazeboSim.launch
+Use Gazebo to simulate a vehicle with Ackermann steering.
+Arguments:
+    namespace (string, default: auto_rally_platform)
+        Vehicle namespace.
+    world_name (string, default: worlds/empty.world)
+        Gazebo world name.
+    cmd_timeout (float, default: 0.5)
+        Command timeout passed to the auto_rally_controller.py node.
+    x (float, default: 0.0)
+    y (float, default: 0.0)
+    z (float, default: 0.1)
+    roll (float, default: 0.0)
+    pitch (float, default: 0.0)
+    yaw (float, default: 0.0)
+        Vehicle pose. x, y, and z are measured in meters. roll, pitch, and yaw
+        are measured in radians.
+Copyright (c) 2013 Wunderkammer Laboratory
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+  http://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<launch>
+
+  <!-- <env name="GAZEBO_MODEL_PATH" value="$(find autorally_description)"/>
+  <env name="GAZEBO_RESOURCE_PATH" value="$(find autorally_description)"/> -->
+  <arg name="namespace" default=""/>
+  <arg name="world_name" default="model://urdf/worlds/terrain_test.world"/>
+  <arg name="cmd_timeout" default="0.5"/>
+
+  <!-- <arg name="world_name" default="$(find velodyne_description)/world/example.world"/> -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+
+  <!-- Spawn the example robot -->
+  <arg name="gpu" default="true"/>
+  <arg name="organize_cloud" default="false"/>
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find velodyne_description)/urdf/example.urdf.xacro' organize_cloud:=$(arg organize_cloud) gpu:=$(arg gpu)" />
+  <node pkg="gazebo_ros" type="spawn_model" name="spawn_model" args="-urdf -param /robot_description -model example"/>
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+
+  <!-- RViz -->
+  <arg name="rviz" default="true"/>
+  <node if="$(arg rviz)" pkg="rviz" type="rviz" name="$(anon rviz)" respawn="false" output="screen" args="-d $(find velodyne_description)/rviz/example.rviz" />
+
+  <include file="$(find autorally_gazebo)/launch/autoRallyTrackWorld.launch">
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+
+
+  
+  <!-- load controllers -->
+  <!-- <node name="controller_spawner" pkg="controller_manager" type="spawner"
+          args="$(find autorally_gazebo)/config/autoRallyPlatformJointCtrlrParams.yaml"/> -->
+
+  <!-- Control the steering, axle, and shock absorber joints. -->
+  <!-- <node name="autorally_controller" pkg="autorally_gazebo"
+        type="autorally_controller.py" output="screen">
+    <param name="cmd_timeout" value="$(arg cmd_timeout)"/>
+    <param name="vehicle_prefix" value="$(arg namespace)"/>
+    <rosparam file="$(find autorally_gazebo)/config/autoRallyPlatformCtrlrParams.yaml" command="load"/> -->
+    <!-- <rosparam param="chassisCommandProirities" command="load" file="$(env AR_CONFIG_PATH)/chassisCommandPriorities.yaml"/> -->
+  <!-- </node> -->
+
+  <!-- Run ground truth pose script, published on /ground_truth/state-->
+  <!-- <node name="ground_truth_republisher" pkg="autorally_gazebo"
+        type="ground_truth_republisher.py" output="screen">
+  </node> -->
+<!-- 
+  <include file="$(find autorally_core)/launch/autorally_core_manager.launch" />
+  <include file="$(find autorally_control)/launch/joystickController.launch" /> -->
+</launch>
