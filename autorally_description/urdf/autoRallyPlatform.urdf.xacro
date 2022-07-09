@@ -289,11 +289,11 @@ limitations under the License.
       </surface>
 
     </link>
-
+<!-- 
     <gazebo reference="${lr_prefix}_${fr_prefix}_wheel">
       <mu1>0.7</mu1>
       <mu2>0.75</mu2>
-    </gazebo>
+    </gazebo> -->
 
   </xacro:macro>
 
@@ -392,11 +392,11 @@ limitations under the License.
 
     <inertial>
       <mass value="${chassis_mass}"/>
-      <inertia ixx="0.003881755275"
+      <inertia ixx="0.1067"
                ixy="0" ixz="0"
-               iyy="0.011310597718"
+               iyy="1.3837"
                iyz="0"
-               izz="0.01243832479"/>
+               izz="0.1067"/>
     </inertial>
   </link>
   <gazebo reference="chassis">
@@ -558,7 +558,7 @@ limitations under the License.
     <sensor type="multicamera" name="stereo_camera">
       <update_rate>30.0</update_rate>
       <camera name="left">
-        <pose>0 0.07 0 0 0 0</pose>
+        <pose>0 0.00 0 0 0 0</pose>
         <horizontal_fov>1.3962634</horizontal_fov>
         <image>
           <width>1280</width>
@@ -698,15 +698,17 @@ limitations under the License.
       <rpyOffset>0 0 0</rpyOffset>
     </plugin>
 
-    <!--<plugin name="tire_friction" filename="libTireFrictionPlugin.so">
+    <!-- <plugin name="tire_friction" filename="libTireFrictionPlugin.so">
       <link_name>left_rear_wheel</link_name>
       <collision_name>collision</collision_name>
-      <friction_static>1.1</friction_static>
-      <friction_dynamic>0.7</friction_dynamic>
+      <friction_static>1.0</friction_static>
+      <friction_dynamic>1.0</friction_dynamic>
       <slip_static>0.10</slip_static>
       <slip_dynamic>0.20</slip_dynamic>
       <speed_static>0.50</speed_static>
-    </plugin>-->
+    </plugin> -->
+
+  
 
   </gazebo>
 

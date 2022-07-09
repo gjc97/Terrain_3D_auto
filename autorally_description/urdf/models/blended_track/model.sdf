@@ -5,16 +5,20 @@
     <link name="link">
       <collision name="collision">
         <geometry>
-          <plane>
+          <plane>            
+            <!-- <normal>0.34205 0 0.9396</normal> -->
+            <!-- <normal>0.1736 0 0.9848</normal>             -->
+            <!-- <normal>0.087159 0 0.996194</normal> -->
             <normal>0 0 1</normal>
-            <size>90 90</size>
+            <size>900 900</size>
           </plane>
         </geometry>
         <surface>
           <friction>
             <ode>
-              <mu>0.01</mu>
-              <mu2>0.01</mu2>
+            <!-- 100 - > 0.1 -->
+              <mu>100</mu>  
+              <mu2>100</mu2>
             </ode>
           </friction>
         </surface>
@@ -22,9 +26,12 @@
       <visual name="visual">
         <cast_shadows>false</cast_shadows>
         <geometry>
-          <plane>
+          <plane>            
+            <!-- <normal>0.34205 0 0.9396</normal> -->
+            <!-- <normal>0.1736 0 0.9848</normal> -->
+            <!-- <normal>0.087159 0 0.996194</normal> -->
             <normal>0 0 1</normal>
-            <size>90 90</size>
+            <size>900 900</size>
           </plane>
         </geometry>
         <material>

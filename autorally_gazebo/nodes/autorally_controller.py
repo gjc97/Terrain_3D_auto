@@ -263,10 +263,13 @@ class AutoRallyCtrlr(object):
       self.runstops = dict()
       self.runstopLock = threading.Lock()
 
-      self.front_axle_max_effort = 2.5
-      self.front_axle_brake_effort = 2.5
+      # self.front_axle_max_effort = 2.5
+      # self.front_axle_brake_effort = 2.5
+      self.front_axle_max_effort = 8.0
+      self.front_axle_brake_effort = 8.0
       self.rear_axle_max_effort = 8
-      self.rear_axle_brake_effort = 4
+      # self.rear_axle_brake_effort = 4
+      self.rear_axle_brake_effort = 8
 
       #self.rear_axle_reverse_percent = 0.25 # percent of max_effort applied when reversing
       #self.rear_axle_reverse_effort = self.rear_axle_max_effort*self.rear_axle_reverse_percent
@@ -385,6 +388,7 @@ class AutoRallyCtrlr(object):
 
             #the brake acts to slow any movement
             frontBrake = numpy.sign(self.wheelSpeedFront)*(-self.front_axle_brake_effort*self.chassisCmds.frontBrake)
+            # frontBrake = -self.front_axle_brake_effort*self.chassisCmds.frontBrake
             chassisSt.frontBrake = self.chassisCmds.frontBrake
             chassisSt.frontBrakeCommander = self.chassisCmds.sender
             foundFrontBrake = True

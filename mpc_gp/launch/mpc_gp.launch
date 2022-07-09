@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+
+    <!-- Node that runs the MPC -->
+    <node pkg="mpc_gp" type="main_node.py" name="mpc_gp_node" output="screen">        
+    </node>
+    
+    
+</launch>
